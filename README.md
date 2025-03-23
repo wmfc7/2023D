@@ -9,4 +9,4 @@ In response to this requirement, my solution is to perform FFT calculations on t
 
 For the programming, I employed STM32CubeMX software to generate the main framework of the HAL library code, and then I wrote the corresponding code for the specific requirements in Keil.
 
-Here, I extend my gratitude to my teammates Liu Shen and Duan Xinyi for their substantial support in constructing the hardware circuit.
+Here, I extend my gratitude to my teammates Shen Liu and Xinyi Duan for their substantial support in constructing the hardware circuit.
