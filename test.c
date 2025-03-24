@@ -120,15 +120,20 @@ void main(void)
     int sure2 = 0;
     float v_down_min;
     float v_down_max;
+    float mean_delta_freq;
+    float m_a;
+    float F;
+    float m_f;
+    float delta_f;
+    float R_c;
+    float h;
 
-    int ret = read_float_column("Data_FM_4_20.log", FFT_result);
-    int ret_1 = read_float_column("Data_FM_4_20_Phase.log", FFT_Phase);
+    int ret = read_float_column("Data_ASK_6.log", FFT_result);
 
     nbrOfpeak = FindPeaksNumber(FFT_result, FFT_LENGTH/2);
     
     float PeakAmp[nbrOfpeak];
     int PeakFreq[nbrOfpeak];
-    float PeakPhase[nbrOfpeak];
 	
 	if (PeakAmp == NULL||PeakFreq == NULL)
 		return;	
@@ -137,7 +142,6 @@ void main(void)
     if((FFT_result[0]>FFT_result[1])&&(FFT_result[0] > 30))
     {
         PeakAmp[count] = FFT_result[0];
-        PeakPhase[count] = FFT_Phase[0]*360/2/Pi;
         PeakFreq[count] = 0;
         count++;
     }
@@ -146,7 +150,6 @@ void main(void)
         if((FFT_result[i] > FFT_result[i-1])&&(FFT_result[i]>FFT_result[i+1])&&(FFT_result[i]>30))
         {
             PeakFreq[count] = i;
-            PeakPhase[count] = FFT_Phase[i]*360/2/Pi;
             PeakAmp[count] = FFT_result[i];
             count++;
         }
@@ -156,7 +159,6 @@ void main(void)
     {
         PeakAmp[count] = FFT_result[FFT_LENGTH/2 - 1];
         PeakFreq[count] = FFT_LENGTH/2 - 1;
-        PeakPhase[count] = FFT_Phase[FFT_LENGTH/2-1]*360/2/Pi;
     }
     for(int i=0;i<nbrOfpeak;i++)
     {
@@ -196,8 +198,7 @@ void main(void)
     for(int i = 0; i < nbrOfpeak; i++)
     {
         printf("freq = %d\t", PeakFreq[i]);
-        printf("amp = %f\t", PeakAmp[i]);
-        printf("phase = %f\n", PeakPhase[i]);
+        printf("amp = %f\n", PeakAmp[i]);
         if (PeakAmp[i] > max_amp_0) 
         {
             max_amp_1 = max_amp_0;
@@ -262,33 +263,58 @@ void main(void)
 			}
     }
 
+    for(int i = 0;i<nbrOfpeak - 1;i++ )
+    {
+        if(i == 0)
+        {
+            mean_delta_freq = 0;
+        }
+        mean_delta_freq += delta_freq[i];
+    }
+
+    mean_delta_freq /=  nbrOfpeak - 1;
+
     if(nbrOfpeak == 1)
     {
         printf("CW");
     }
     if(nbrOfpeak == 3)
     {
-        printf("AM");
+        printf("AM\n");
+        F = (float)(PeakFreq[2] - PeakFreq[0])/2/FFT_LENGTH*400;
+		m_a = (PeakAmp[1] - min(PeakAmp[0],PeakAmp[2]))/(PeakAmp[1] + min(PeakAmp[0],PeakAmp[2]));
+        printf("F = %f\tm_a = %f\n", F ,m_a);
     }
     if(nbrOfpeak > 3)
     {
         if((max_amp_0 - max_amp_1)/max_amp_0 <= 0.2 && abs(max_freq_0 + max_freq_1 - FFT_LENGTH/2) <= 1 && sure0 == 1)
         {
-            printf("2PSK");
+            printf("2PSK\n");
+			R_c = (float)abs(max_freq_1 - max_freq_0)/2/FFT_LENGTH*400;
+            printf("R_c = %f\n", R_c);
         }
         else
         {
             if(abs(max_freq_0 - FFT_LENGTH/4) <= 1 && abs(PeakFreq[max_0-1]+PeakFreq[max_0+1]-FFT_LENGTH/2)<=1 && sure1 == 0 && sure2 == 1)
             {
-                    printf("2ASK");
+				R_c = (float)(PeakFreq[max_0+1]-PeakFreq[max_0-1])/2/FFT_LENGTH*400;
+                printf("2ASK\n");
+                printf("R_c = %f\n", R_c);
             }
-            else if(sure1 == 1 && sure0 == 0 && sure2 == 0)
+            else if(sure1 == 1 && sure0 == 0 && sure2 == 0 && mean_delta_freq > 55.0f)
             {
-                printf("2FSK");
+                printf("2FSK\n");
+                R_c = mean_delta_freq/FFT_LENGTH*400;
+			    h = fabs(MainPeakAmp[0] - MainPeakAmp[nbrOfMainPeak-1])/mean_delta_freq;
+                printf("R_c  =%f\th = %f\n", R_c, h);
             }
             else
             {
-                printf("FM");
+                printf("FM\n");
+                F = mean_delta_freq/FFT_LENGTH*400;
+				m_f = (float)(PeakFreq[nbrOfpeak-1]-PeakFreq[0])/2/F/FFT_LENGTH*400-1;
+				delta_f = F*m_f;
+                printf("F = %f\tm_f = %f\tdelta_f = %f\n", F, m_f, delta_f);
             }
         }
     }
