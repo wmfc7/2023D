@@ -5,7 +5,7 @@ The hardware circuit utilizes chips such as AD9959, AD835, ADF4351, ADF4002, STM
 
 The requirements for the program primarily involve distinguishing AM, FM, 2ASK, 2FSK, and 2PSK signals, and subsequently entering the corresponding hardware circuit for demodulation.
 
-In response to this requirement, My solution is to perform FFT calculations on the signals and distinguish each signal in the frequency domain based on the amplitude and phase diagrams.
+In response to this requirement, My solution is to perform FFT calculations on the signals and distinguish each signal based on the amplitude and phase diagrams in the frequency domain.
 
 For the programming, I employed STM32CubeMX software to generate the main framework of the HAL library code, and then I wrote the corresponding code for the specific requirements in Keil.
 
