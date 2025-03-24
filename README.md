@@ -1,16 +1,16 @@
-# Solution to Topic D of the 2023 National Undergraduate Electronics Design Contest
+# Solution to Question D of the 2023 National Undergraduate Electronics Design Contest
 
 - **Project Name**: Signal Modulation Mode Recognition and Parameter Estimation Device  
 
-- **Competition Topic**: Topic D of the 2023 National Undergraduate Electronics Design Con -test (For detailed information, see `D题_信号调制方式识别与参数估计装置.pdf`)
+- **Competition Topic**: Question D of the 2023 National Undergraduate Electronics Design Con -test (For detailed information, see `D题_信号调制方式识别与参数估计装置.pdf`)
 
 ## Brief introduction
 
-The source code for Topic D of the 2023 National Undergraduate Electronics Design Contest.
+The source code for Question D of the 2023 National Undergraduate Electronics Design Contest.
 
 The hardware circuit utilizes chips such as AD9959, AD835, ADF4351, ADF4002, STM32H743, ADL5511, OPA690, and OPA695, along with several low-pass filters.
 
-The requirements of this topic regarding the program code primarily involve distinguishing AM, FM, 2ASK, 2FSK, and 2PSK signals, and subsequently entering the corresponding hardware circuit for demodulation.
+The requirements of this question regarding the program code primarily involve distinguishing AM, FM, 2ASK, 2FSK, and 2PSK signals, and subsequently entering the corresponding hardware circuit for demodulation.
 
 In response to this requirement, My solution is to perform FFT calculations on the signals and distinguish each signal based on the amplitude diagrams in the frequency domain.
 
@@ -59,4 +59,4 @@ The code for this project follows the [MIT License].Please refer to the files wi
 
 ## Acknowledgments
 
-Here,I would like to express my gratitude to the organizing committee of the 2023 National Undergraduate Electronics Design Contest for providing the competition topic, to my advisor Douzhe Li for his technical guidance, and to my teammates Shen Liu and Xinyi Duan for their substantial support in building the hardware circuits.
+Here,I would like to express my gratitude to the organizing committee of the 2023 National Undergraduate Electronics Design Contest for providing the competition problem, to my advisor Douzhe Li for his technical guidance, and to my teammates Shen Liu and Xinyi Duan for their substantial support in building the hardware circuits.
