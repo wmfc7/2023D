@@ -12,9 +12,9 @@ The hardware circuit utilizes chips such as AD9959, AD835, ADF4351, ADF4002, STM
 
 The requirements of this topic regarding the program code primarily involve distinguishing AM, FM, 2ASK, 2FSK, and 2PSK signals, and subsequently entering the corresponding hardware circuit for demodulation.
 
-In response to this requirement, My solution is to perform FFT calculations on the signals and distinguish each signal based on the amplitude and phase diagrams in the frequency domain.
+In response to this requirement, My solution is to perform FFT calculations on the signals and distinguish each signal based on the amplitude diagrams in the frequency domain.
 
-For the programming, I employed STM32CubeMX software to generate the main framework of the HAL library code, and then I wrote the corresponding code for the specific requirements in Keil.
+For the programming, I employed STM32CubeMX software to generate the main framework of the HAL library code, and then I wrote the corresponding code for the specific requirements in Keil. To be able to break free from the constraints of the microcontroller, I exported the test data after performing FFT operations on various modulation signals, and I wrote a segment of test code in the C language development environment within Visual Studio Code.
 
 ## File Structure Description
 
@@ -44,6 +44,14 @@ For the programming, I employed STM32CubeMX software to generate the main framew
 ## Test data usage
 
 Use the .log file in the `amp test data` as input into the C language program `test.c` for testing.
+
+## note
+
+- The source code for the signal modulation mode recognition and parameter estimation device is entirely based on solving the problem of recognizing signals modulated using the data provided in the file. This source code cannot achieve general signal modulation mode recognition and parameter estimation.
+
+- Regarding the section on how to demodulate signals, this project only includes the code using ADF4351 and ADF4002, along with the code for the field-effect transistor switching circuit set up for different signals requiring different hardware circuits. The specific method of demodulating signals is primarily implemented using hardware circuits.
+
+- The FFT operation is implemented using code from the DSP library.
 
 ## License
 
