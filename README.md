@@ -12,7 +12,7 @@ The hardware circuit utilizes chips such as AD9959, AD835, ADF4351, ADF4002, STM
 
 The requirements of this question regarding the program code primarily involve distinguishing AM, FM, 2ASK, 2FSK, and 2PSK signals, and subsequently entering the corresponding hardware circuit for demodulation.
 
-In response to this requirement, My solution is to perform FFT calculations on the signals and distinguish each signal based on the amplitude diagrams in the frequency domain.
+My solution to this requirement involves the use of ADC, DMA, and TIM to achieve ADC interrupt acquisition of the signal. Subsequently, FFT computation will be performed on the acquired signals, allowing for differentiation of each signal based on the amplitude spectrum in the frequency domain. The ADC acquisition frequency is 400 kHz, determined by TIM. The FFT computation is implemented using the DSP library.
 
 For the programming, I employed STM32CubeMX software to generate the main framework of the HAL library code, and then I wrote the corresponding code for the specific requirements in Keil. To be able to break free from the constraints of the microcontroller, I exported the test data after performing FFT operations on various modulation signals, and I wrote a segment of test code in the C language development environment within Visual Studio Code.
 
