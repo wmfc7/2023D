@@ -128,7 +128,7 @@ void main(void)
     float R_c;
     float h;
 
-    int ret = read_float_column("Data_ASK_6.log", FFT_result);
+    int ret = read_float_column("Data_FSK_6_24.log", FFT_result);
 
     nbrOfpeak = FindPeaksNumber(FFT_result, FFT_LENGTH/2);
     
@@ -206,7 +206,7 @@ void main(void)
             max_1 = max_0;
             max_amp_0 = PeakAmp[i];
             max_freq_0 = PeakFreq[i];
-            max_0= i;
+            max_0 = i;
         } 
         else if (PeakAmp[i] < max_amp_0 && PeakAmp[i] > max_amp_1)
         {
@@ -230,7 +230,7 @@ void main(void)
     }
     for (int i = nbrOfpeak-1; i>0; i--)
     {
-        delta_freq[nbrOfpeak-1 - i] = PeakFreq[i] - PeakFreq[i-1];
+        delta_freq[nbrOfpeak - 1 - i] = PeakFreq[i] - PeakFreq[i-1];
     }
     if(nbrOfMainPeak == 1)   //判断是否是单主峰
     {
@@ -305,7 +305,7 @@ void main(void)
             {
                 printf("2FSK\n");
                 R_c = mean_delta_freq/FFT_LENGTH*400;
-			    h = fabs(MainPeakAmp[0] - MainPeakAmp[nbrOfMainPeak-1])/mean_delta_freq;
+			    h = fabs(MainPeakFreq[0] - MainPeakFreq[nbrOfMainPeak-1])/mean_delta_freq/2;
                 printf("R_c  =%f\th = %f\n", R_c, h);
             }
             else
