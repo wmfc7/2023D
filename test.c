@@ -128,7 +128,7 @@ void main(void)
     float R_c;
     float h;
 
-    int ret = read_float_column("Data_FSK_6_24.log", FFT_result);
+    int ret = read_float_column("Data_AM_3.log", FFT_result);
 
     nbrOfpeak = FindPeaksNumber(FFT_result, FFT_LENGTH/2);
     
@@ -282,7 +282,7 @@ void main(void)
     {
         printf("AM\n");
         F = (float)(PeakFreq[2] - PeakFreq[0])/2/FFT_LENGTH*400;
-		m_a = (PeakAmp[1] - min(PeakAmp[0],PeakAmp[2]))/(PeakAmp[1] + min(PeakAmp[0],PeakAmp[2]));
+		m_a = (PeakAmp[0] + PeakAmp[2])/PeakAmp[1];
         printf("F = %f\tm_a = %f\n", F ,m_a);
     }
     if(nbrOfpeak > 3)
